@@ -68,7 +68,7 @@ def parse_args():
 
 @app.route("/")
 def main():
-    rules = None
+    rules = get_active_rules()
     interfaces = get_interfaces()
     return render_template(
         "main.html",
