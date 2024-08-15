@@ -277,12 +277,12 @@ def parse_rule(split_rule):
 
 
 if __name__ == "__main__":
-       if os.geteuid() != 0:
-       print(
-           "You need to have root privileges to run this script.\n"
-           "Please try again, this time using 'sudo'. Exiting."
-       )
-       sys.exit(1)
+    if os.geteuid() != 0:
+        print(
+            "You need to have root privileges to run this script.\n"
+            "Please try again, this time using 'sudo'. Exiting."
+        )
+        sys.exit(1)
 
     # TC Vars
     args = parse_args()
