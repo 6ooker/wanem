@@ -7,12 +7,16 @@ script_dir=${0%/*}
 
 # Banner
 if [[ ! -z $(which figlet) ]]; then
-    figlet WanEm
+    figlet WanEm -f slant
     echo -e "${y} - By 6ooker"
 else
 echo -e "\n\n\n\n
-WanEm\n\n\n"
-
+ _       __            ______
+| |     / /___ _____  / ____/___ ___
+| | /| / / __ `/ __ \\/ __/ / __ `__ \
+| |/ |/ / /_/ / / / / /___/ / / / / /
+|__/|__/\__,_/_/ /_/_____/_/ /_/ /_/
+                       - By 6ooker\n\n\n"
 fi
 
 # Wait 3 seconds
@@ -40,11 +44,27 @@ installPython3() {
     sudo apt install -y python3
 }
 
+getServerIp() {
+    serverip=$(whiptail --title "WebGUI - IP Address" --inputbox "\nPlease enter the IP on which the WebGUI should be available:" 20 50 "127.0.0.1" 3>&1 1>&2 2>&3)
+    echo "$serverip"
+}
+
+getInterfaces() {
+    for i in $(basename -a /sys/class/net/*); do
+        echo "$i"
+    done
+}
+
+selectInterfaces() {
+    intfchoices=$(whiptail --title "WanEm - Interfaces" --separate-output --checklist "\nWhich Interfaces to use/show in the WebGUI." 30 80 20 \
+    )
+}
+
 writeStarterScript() {
     cd $script_dir
     echo -e "#! /bin/bash\n
 sudo screen -d -m -S \"tcgui\"
-com=\"python3 $(pwd)/main.py --ip $1 --port 80 --regex $2\"
+com=\"python3 $(pwd)/main.py --ip $1 --port 80 --dev $2\"
 sudo screen -S \"tcgui\" -X screen \$com
 exit 0" | tee auto_start.sh >/dev/null
     chmod +x auto_start.sh
@@ -82,7 +102,7 @@ do
 
         2)
         echo -e "${c}Writing Auto Start Script"; $r
-        writeStarterScript x.x.x.x regex
+        writeStarterScript $(getServerIp) regex
         ;;
 
         3)
