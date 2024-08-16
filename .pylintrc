@@ -1,0 +1,24 @@
+[MASTER]
+
+ignore=venv
+
+[BASIC]
+
+method-rgx=(([a-z_][a-z0-9_]*))$
+
+[MESSAGES CONTROL]
+
+# Only show warnings with the listed confidence levels. Leave empty to show
+# all. Valid levels: HIGH, INFERENCE, INFERENCE_FAILURE, UNDEFINED
+confidence=
+
+disable=
+    missing-function-docstring,
+    import-error,
+    fixme,
+    consider-using-with
+
+[FORMAT]
+
+# Maximum number of characters on a single line.
+max-line-length=120
